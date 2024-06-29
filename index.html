@@ -3,79 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Motivation</title>
+    <title>DON'T FEEL QUITE BONITA?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to bottom, #000000, #333333);
-            color: #f0f0f0;
+            font-family: 'Raleway', sans-serif;
             text-align: center;
-            padding: 50px;
+            padding: 20px;
+            margin: 0;
+            transition: background 1s, color 1s;
+            overflow: hidden;
         }
         h1 {
-            color: #f1c40f; /* Batman yellow */
+            transition: color 1s;
+            margin-bottom: 20px;
         }
         #quote {
-            font-size: 1.5em;
+            font-size: 1.2em;
             margin-top: 20px;
+            transition: color 1s, opacity 1s;
+            opacity: 0;
         }
-        .symbol {
-            width: 50px;
-            height: auto;
-            display: block;
-            margin: 20px auto;
+        .visible {
+            opacity: 1;
+        }
+        #progressBar {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 30px;
+        }
+        #progress {
+            height: 20px;
+            background-color: #76c7c0;
+            width: 0;
+            transition: width 1s linear;
         }
     </style>
 </head>
 <body>
-    <h1>Motivation</h1>
-    <img id="symbol" class="symbol" src="" alt="Symbol">
+    <h1>DON'T FEEL QUITE BONITA?</h1>
     <div id="quote">Loading quote...</div>
+    <div id="progressBar"><div id="progress"></div></div>
 
     <script>
         const quotes = [
-            { text: "It's not who I am underneath, but what I do that defines me.", author: "Batman", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Batman_comics_logo.svg/1280px-Batman_comics_logo.svg.png" },
-            { text: "I am vengeance, I am the night, I am Batman!", author: "Batman", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Batman_comics_logo.svg/1280px-Batman_comics_logo.svg.png" },
-            { text: "Sometimes the truth isn't good enough, sometimes people need more.", author: "Batman", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Batman_comics_logo.svg/1280px-Batman_comics_logo.svg.png" },
-            { text: "Endure, Master Wayne. Take it. They'll hate you for it, but that's the point of Batman.", author: "Alfred Pennyworth", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Batman_comics_logo.svg/1280px-Batman_comics_logo.svg.png" },
-            { text: "You either die a hero, or you live long enough to see yourself become the villain.", author: "Harvey Dent", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Batman_comics_logo.svg/1280px-Batman_comics_logo.svg.png" },
-            { text: "I'm whatever Gotham needs me to be.", author: "Batman", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Batman_comics_logo.svg/1280px-Batman_comics_logo.svg.png" },
-            { text: "The night is darkest just before the dawn. And I promise you, the dawn is coming.", author: "Harvey Dent", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Batman_comics_logo.svg/1280px-Batman_comics_logo.svg.png" },
-            { text: "I have one power. I never give up.", author: "Batman", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Batman_comics_logo.svg/1280px-Batman_comics_logo.svg.png" },
-            { text: "All men have limits. They learn what they are and learn not to exceed them. I ignore mine.", author: "Batman", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Batman_comics_logo.svg/1280px-Batman_comics_logo.svg.png" },
-            { text: "If you kill a killer, the number of killers in the world remains the same.", author: "Batman", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Batman_comics_logo.svg/1280px-Batman_comics_logo.svg.png" },
-            { text: "Justice is about more than revenge.", author: "Batman", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Batman_comics_logo.svg/1280px-Batman_comics_logo.svg.png" },
-            { text: "The city needs me.", author: "Batman", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Batman_comics_logo.svg/1280px-Batman_comics_logo.svg.png" },
-            { text: "We fall so we can learn to pick ourselves back up.", author: "Batman", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Batman_comics_logo.svg/1280px-Batman_comics_logo.svg.png" },
-            { text: "Never give up!", author: "Shuzo Matsuoka", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Fish_icon.svg/1200px-Fish_icon.svg.png" },
-            { text: "The results will follow if you do your best now.", author: "Shuzo Matsuoka", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Fish_icon.svg/1200px-Fish_icon.svg.png" },
-            { text: "Believe in yourself!", author: "Shuzo Matsuoka", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Fish_icon.svg/1200px-Fish_icon.svg.png" },
-            { text: "It's important to continue to challenge yourself.", author: "Shuzo Matsuoka", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Fish_icon.svg/1200px-Fish_icon.svg.png" },
-            { text: "You can change your destiny with effort.", author: "Shuzo Matsuoka", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Fish_icon.svg/1200px-Fish_icon.svg.png" },
-            { text: "Don't be afraid to fail. Be afraid not to try.", author: "Shuzo Matsuoka", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Fish_icon.svg/1200px-Fish_icon.svg.png" },
-            { text: "The future depends on what you do today.", author: "Shuzo Matsuoka", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Fish_icon.svg/1200px-Fish_icon.svg.png" },
-            { text: "Push yourself to the limit.", author: "Shuzo Matsuoka", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Fish_icon.svg/1200px-Fish_icon.svg.png" },
-            { text: "You can achieve anything if you put your mind to it.", author: "Shuzo Matsuoka", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Fish_icon.svg/1200px-Fish_icon.svg.png" },
-            { text: "Your potential is limitless.", author: "Shuzo Matsuoka", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Fish_icon.svg/1200px-Fish_icon.svg.png" },
-            { text: "Don't ever give up. Even if it's painful, even if it's agonizing, don't try to take the easy way out.", author: "Tanjiro Kamado", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Tanjiro_icon.svg/800px-Tanjiro_icon.svg.png" },
-            { text: "I will never give up. I will never give up.", author: "Tanjiro Kamado", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Tanjiro_icon.svg/800px-Tanjiro_icon.svg.png" },
-            { text: "No matter how many people you may lose, you have no choice but to go on living.", author: "Tanjiro Kamado", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Tanjiro_icon.svg/800px-Tanjiro_icon.svg.png" },
-            { text: "You have to keep moving forward.", author: "Tanjiro Kamado", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Tanjiro_icon.svg/800px-Tanjiro_icon.svg.png" },
-            { text: "You can win this fight.", author: "Tanjiro Kamado", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Tanjiro_icon.svg/800px-Tanjiro_icon.svg.png" },
-            { text: "If you can't do it, don't. Focus on what you can do.", author: "Tanjiro Kamado", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Tanjiro_icon.svg/800px-Tanjiro_icon.svg.png" },
-            { text: "I can do it. I know I can do it.", author: "Tanjiro Kamado", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Tanjiro_icon.svg/800px-Tanjiro_icon.svg.png" },
-            { text: "The bond between Nezuko and I can't be severed by anyone.", author: "Tanjiro Kamado", symbol: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Tanjiro_icon.svg/800px-Tanjiro_icon.svg.png" }
+            { text: "It's not who I am underneath, but what I do that defines me.", author: "Batman", theme: { background: "linear-gradient(to bottom, #000000, #333333)", color: "#f1c40f" } },
+            { text: "I am vengeance, I am the night, I am Batman!", author: "Batman", theme: { background: "linear-gradient(to bottom, #000000, #333333)", color: "#f1c40f" } },
+            { text: "Sometimes the truth isn't good enough, sometimes people need more.", author: "Batman", theme: { background: "linear-gradient(to bottom, #000000, #333333)", color: "#f1c40f" } },
+            { text: "Endure, Master Wayne. Take it. They'll hate you for it, but that's the point of Batman.", author: "Alfred Pennyworth", theme: { background: "linear-gradient(to bottom, #000000, #333333)", color: "#f1c40f" } },
+            { text: "You either die a hero, or you live long enough to see yourself become the villain.", author: "Harvey Dent", theme: { background: "linear-gradient(to bottom, #000000, #333333)", color: "#f1c40f" } },
+            { text: "I'm whatever Gotham needs me to be.", author: "Batman", theme: { background: "linear-gradient(to bottom, #000000, #333333)", color: "#f1c40f" } },
+            { text: "The night is darkest just before the dawn. And I promise you, the dawn is coming.", author: "Harvey Dent", theme: { background: "linear-gradient(to bottom, #000000, #333333)", color: "#f1c40f" } },
+            { text: "I have one power. I never give up.", author: "Batman", theme: { background: "linear-gradient(to bottom, #000000, #333333)", color: "#f1c40f" } },
+            { text: "All men have limits. They learn what they are and learn not to exceed them. I ignore mine.", author: "Batman", theme: { background: "linear-gradient(to bottom, #000000, #333333)", color: "#f1c40f" } },
+            { text: "If you kill a killer, the number of killers in the world remains the same.", author: "Batman", theme: { background: "linear-gradient(to bottom, #000000, #333333)", color: "#f1c40f" } },
+            { text: "Justice is about more than revenge.", author: "Batman", theme: { background: "linear-gradient(to bottom, #000000, #333333)", color: "#f1c40f" } },
+            { text: "The city needs me.", author: "Batman", theme: { background: "linear-gradient(to bottom, #000000, #333333)", color: "#f1c40f" } },
+            { text: "We fall so we can learn to pick ourselves back up.", author: "Batman", theme: { background: "linear-gradient(to bottom, #000000, #333333)", color: "#f1c40f" } },
+            { text: "Never give up!", author: "Shuzo Matsuoka", theme: { background: "linear-gradient(to bottom, #0000ff, #3333ff)", color: "#ffffff" } },
+            { text: "The results will follow if you do your best now.", author: "Shuzo Matsuoka", theme: { background: "linear-gradient(to bottom, #0000ff, #3333ff)", color: "#ffffff" } },
+            { text: "Believe in yourself!", author: "Shuzo Matsuoka", theme: { background: "linear-gradient(to bottom, #0000ff, #3333ff)", color: "#ffffff" } },
+            { text: "It's important to continue to challenge yourself.", author: "Shuzo Matsuoka", theme: { background: "linear-gradient(to bottom, #0000ff, #3333ff)", color: "#ffffff" } },
+            { text: "You can change your destiny with effort.", author: "Shuzo Matsuoka", theme: { background: "linear-gradient(to bottom, #0000ff, #3333ff)", color: "#ffffff" } },
+            { text: "Don't be afraid to fail. Be afraid not to try.", author: "Shuzo Matsuoka", theme: { background: "linear-gradient(to bottom, #0000ff, #3333ff)", color: "#ffffff" } },
+            { text: "The future depends on what you do today.", author: "Shuzo Matsuoka", theme: { background: "linear-gradient(to bottom, #0000ff, #3333ff)", color: "#ffffff" } },
+            { text: "Push yourself to the limit.", author: "Shuzo Matsuoka", theme: { background: "linear-gradient(to bottom, #0000ff, #3333ff)", color: "#ffffff" } },
+            { text: "You can achieve anything if you put your mind to it.", author: "Shuzo Matsuoka", theme: { background: "linear-gradient(to bottom, #0000ff, #3333ff)", color: "#ffffff" } },
+            { text: "Your potential is limitless.", author: "Shuzo Matsuoka", theme: { background: "linear-gradient(to bottom, #0000ff, #3333ff)", color: "#ffffff" } },
+            { text: "Don't ever give up. Even if it's painful, even if it's agonizing, don't try to take the easy way out.", author: "Tanjiro Kamado", theme: { background: "linear-gradient(to bottom, #800000, #cc0000)", color: "#ffffff" } },
+            { text: "I will never give up. I will never give up.", author: "Tanjiro Kamado", theme: { background: "linear-gradient(to bottom, #800000, #cc0000)", color: "#ffffff" } },
+            { text: "No matter how many people you may lose, you have no choice but to go on living.", author: "Tanjiro Kamado", theme: { background: "linear-gradient(to bottom, #800000, #cc0000)", color: "#ffffff" } },
+            { text: "You have to keep moving forward.", author: "Tanjiro Kamado", theme: { background: "linear-gradient(to bottom, #800000, #cc0000)", color: "#ffffff" } },
+            { text: "You can win this fight.", author: "Tanjiro Kamado", theme: { background: "linear-gradient(to bottom, #800000, #cc0000)", color: "#ffffff" } },
+            { text: "If you can't do it, don't. Focus on what you can do.", author: "Tanjiro Kamado", theme: { background: "linear-gradient(to bottom, #800000, #cc0000)", color: "#ffffff" } },
+            { text: "I can do it. I know I can do it.", author: "Tanjiro Kamado", theme: { background: "linear-gradient(to bottom, #800000, #cc0000)", color: "#ffffff" } },
+            { text: "The bond between Nezuko and I can't be severed by anyone.", author: "Tanjiro Kamado", theme: { background: "linear-gradient(to bottom, #800000, #cc0000)", color: "#ffffff" } }
         ];
 
         function displayQuote() {
             const randomIndex = Math.floor(Math.random() * quotes.length);
             const quote = quotes[randomIndex];
             document.getElementById('quote').innerText = `${quote.text} - ${quote.author}`;
-            document.getElementById('symbol').src = quote.symbol;
+            document.body.style.background = quote.theme.background;
+            document.body.style.color = quote.theme.color;
+            document.querySelector('h1').style.color = quote.theme.color;
+            document.getElementById('quote').style.color = quote.theme.color;
+            document.getElementById('quote').classList.remove('visible');
+            setTimeout(() => {
+                document.getElementById('quote').classList.add('visible');
+            }, 50);
+        }
+
+        function updateProgressBar() {
+            const progressBar = document.getElementById('progress');
+            let width = 0;
+            const interval = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(interval);
+                } else {
+                    width++;
+                    progressBar.style.width = width + '%';
+                }
+            }, 18000000 / 100); // 5 hours divided by 100 steps
         }
 
         displayQuote();
-        setInterval(displayQuote, 18000000); // Change quote every 5 hours (5 hours = 18000000 milliseconds)
+        updateProgressBar();
+        setInterval(() => {
+            displayQuote();
+            updateProgressBar();
+        }, 18000000); // Change quote every 5 hours (5 hours = 18000000 milliseconds)
     </script>
 </body>
 </html>
